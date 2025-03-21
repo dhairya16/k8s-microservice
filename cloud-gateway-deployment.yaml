@@ -1,37 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: config-server-app
+  name: cloud-gateway-app
 spec:
   selector:
     matchLabels:
-      app: config-server-app
+      app: cloud-gateway-app
   template:
     metadata:
       labels:
-        app: config-server-app
+        app: cloud-gateway-app
     spec:
       containers:
-        - name: config-server-app
-          image: dhairya16/configserver:0.0.1
+        - name: cloud-gateway-app
+          image: dhairya16/cloudgateway:0.0.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 9296
+            - containerPort: 9090
           env:
             - name: EUREKA_SERVER_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   name: eureka-cm
                   key: eureka_server_address
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-cm
+                  key: config_server_url
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: config-server-svc
+  name: cloud-gateway-svc
 spec:
+  type: LoadBalancer
   selector:
-    app: config-server-svc
+    app: cloud-gateway-app
   ports:
     - port: 80
-      targetPort: 9296
+      targetPort: 9090
