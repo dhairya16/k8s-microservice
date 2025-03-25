@@ -18,6 +18,19 @@ spec:
           ports:
             - containerPort: 8080
           env:
+            - name: SERVER_MAX_HTTP_REQUEST_HEADER_SIZE
+              value: "65536"
+            - name: SERVER_HTTP2_ENABLED
+              value: "false"
+            - name: SERVER_COMPRESSION_ENABLED
+              value: "true"
+            - name: SERVER_USE_FORWARD_HEADERS
+              value: "false"
+
+            - name: SPRING_APPLICATION_NAME
+              value: "PRODUCT-SERVICE"
+            - name: SERVER_PORT
+              value: "8080"
             - name: EUREKA_SERVER_ADDRESS
               valueFrom:
                 configMapKeyRef:

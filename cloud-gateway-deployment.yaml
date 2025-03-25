@@ -18,6 +18,21 @@ spec:
           ports:
             - containerPort: 9090
           env:
+            - name: SERVER_MAX_HTTP_REQUEST_HEADER_SIZE
+              value: "65536" # 64KB (double the previous size)
+            - name: SPRING_CLOUD_GATEWAY_HTTP_CLIENT_MAX_HEADER_SIZE
+              value: "65536"
+            - name: SPRING_CLOUD_GATEWAY_HTTP_CLIENT_RESPONSE_TIMEOUT
+              value: "60000"
+
+            # Additional critical settings
+            - name: SPRING_CLOUD_GATEWAY_ADD_PROXY_HEADERS
+              value: "false"
+            - name: SPRING_CLOUD_GATEWAY_STRIP_PREFIX
+              value: "true"
+            - name: SPRING_CLOUD_GATEWAY_FORWARDED_HEADERS_ENABLED
+              value: "false"
+
             - name: EUREKA_SERVER_ADDRESS
               valueFrom:
                 configMapKeyRef:
@@ -26,7 +41,7 @@ spec:
             - name: CONFIG_SERVER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: eureka-cm
+                  name: config-cm
                   key: config_server_url
 
 ---
