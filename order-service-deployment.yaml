@@ -31,11 +31,6 @@ spec:
               value: "ORDER-SERVICE"
             - name: SERVER_PORT
               value: "8082"
-            - name: EUREKA_SERVER_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  name: eureka-cm
-                  key: eureka_server_address
             - name: CONFIG_SERVER_URL
               valueFrom:
                 configMapKeyRef:

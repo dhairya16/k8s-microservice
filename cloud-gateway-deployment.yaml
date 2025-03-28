@@ -33,11 +33,6 @@ spec:
             - name: SPRING_CLOUD_GATEWAY_FORWARDED_HEADERS_ENABLED
               value: "false"
 
-            - name: EUREKA_SERVER_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  name: eureka-cm
-                  key: eureka_server_address
             - name: CONFIG_SERVER_URL
               valueFrom:
                 configMapKeyRef:
